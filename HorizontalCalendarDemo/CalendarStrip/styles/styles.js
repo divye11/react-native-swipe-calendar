@@ -8,7 +8,7 @@ const styles = {
     paddingBottom: 3
   },
   calendarStrip: {
-    width: responsiveWidth(80)
+    width: responsiveWidth(90)
   }
 };
 

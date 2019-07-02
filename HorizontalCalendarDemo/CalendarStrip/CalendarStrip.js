@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { View, Text, FlatList } from 'react-native';
 import Moment from 'moment';
 import { extendMoment } from 'moment-range';
-
+import { responsiveWidth } from 'react-native-responsive-dimensions';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 //importing actions
-import { SetActiveIndex } from '../../actions/CalendarActions';
+import { SetActiveIndex } from '../actions/CalendarActions';
 
 //importing components
 import Date from './Date';
@@ -42,9 +42,13 @@ class CalendarStrip extends Component {
     this.props.onSelectDate(Moment(date));
   }
 
+  onRender = (width) => {
+    console.log(width);
+  }
+
   getDates = () => {
     const { showDaysBeforeCurrent, showDaysAfterCurrent, currentDate } = this.props;
-    let totalDays = showDaysAfterCurrent + showDaysBeforeCurrent + 1;
+    const totalDays = showDaysAfterCurrent + showDaysBeforeCurrent + 1;
     const startDay = currentDate.clone().subtract(showDaysBeforeCurrent, 'days').format('YYYY-MM-DD');
     const endDay = currentDate.clone().add(showDaysAfterCurrent, 'days').format('YYYY-MM-DD');
     const range = moment.range(Moment(startDay), Moment(endDay));
@@ -52,10 +56,6 @@ class CalendarStrip extends Component {
     let dates = [];
     arrayInterval.map(d => dates.push(d.format('YYYY-MM-DD')));
     return dates;
-  }
-
-  onRender = (width) => {
-    console.log(width);
   }
 
   _renderItem = ({ item, index }) => {
@@ -75,11 +75,12 @@ class CalendarStrip extends Component {
   _keyExtractor = (item) => item.toString();
 
   render() {
+    const { width } = this.props;
     return (
       <View style={styles.container}>
         <FlatList
         keyExtractor={this._keyExtractor}
-        style={styles.calendarStrip}
+        style={{ width: width || responsiveWidth(80) }}
         data={this.getDates()}
         renderItem={this._renderItem}
         horizontal
