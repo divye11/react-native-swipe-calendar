@@ -1,5 +1,8 @@
+NOTE: Currently I am building this library. Feel free to install the demo app from from examples folder and check the component for yourself. 
+
 # react-native-swipe-calendar
 Horizontal swiping calendar component for your react native app.
+
 ## Installation steps
 Install from the NPM respository using yarn or npm
 
